@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class SnapshotManager
+module SnapshotManager
   def self.ping = :pong
 end
