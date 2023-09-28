@@ -14,11 +14,14 @@ module SnapshotManager::Plan::Ultra
     end
 
     private def validate_retention
-      @date >= yearly_retain_date
+      @date >= retain_date
     end
 
-    private def yearly_retain_date
-      Date.today.prev_year(12).prev_month(12).prev_day(42)
+    private def retain_date
+      Date
+        .today.prev_year(SnapshotManager::Plan::YEARLY_RETAIN_VALUE)
+        .prev_month(SnapshotManager::Plan::MONTHLY_RETAIN_VALUE)
+        .prev_day(SnapshotManager::Plan::DAILY_RETAIN_VALUE)
     end
   end
 end
