@@ -18,7 +18,10 @@ module SnapshotManager::Plan::Pro
     end
 
     private def retain_date
-      Date.today.prev_month(12).prev_day(42)
+      Date
+        .today
+        .prev_month(SnapshotManager::Plan::MONTHLY_RETAIN_VALUE)
+        .prev_day(SnapshotManager::Plan::DAILY_RETAIN_VALUE)
     end
   end
 end

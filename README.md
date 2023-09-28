@@ -1,1 +1,66 @@
-# snapshot-manager
+# Snapshot Manager
+
+The Snapshot Manager is a tool that allows you to manage the retention of backup copies for a specific enterprise application instance based on predefined retention plans.
+
+## Retention Plans
+
+The library supports three different retention plans, each with specific rules:
+
+### Beginner Plan
+
+- **Starter Period:** 42 days
+- **Snapshot Management:**
+  - Retain each daily snapshot for 42 days.
+
+### Pro Plan
+
+- **Retention Period:** 42 days and 12 months
+- **Snapshot Management:**
+  - Retain each daily snapshot for 42 days.
+  - Retain the last snapshot of each month for 12 months.
+
+### Ultra Plan
+
+- **Retention Period:** 42 days, 12 months, and 7 years
+- **Snapshot Management:**
+  - Retain each daily snapshot for 42 days.
+  - Retain the last snapshot of each month for 12 months.
+  - Retain the last snapshot of each year for 7 years.
+
+## Features
+
+### Retention Validation
+
+The Snapshot Manager Retention Validation goal is to determine whether a snapshot created on a specific date should be retained or deleted according to the defined rules in the backup plan.
+
+To use the Snapshot Manager Retention Validation, you can call the `SnapshotManager.should_retain` method with the retention plan and a specific date as inputs. The inputs should be in the format of strings, and date should be on the format "YYYY/MM/DD"
+
+It will determine whether the snapshot for that date should be retained (returns true) or deleted (returns false) according to the rules of the selected backup plan.
+
+Example Usage:
+
+```ruby
+SnapshotManager.should_retain("Beginner", "2023/01/23")
+=> false
+
+SnapshotManager.should_retain("Beginner", Date.today.to_s)
+=> true
+
+SnapshotManager.should_retain("Pro", "2022/01/23")
+=> false
+
+SnapshotManager.should_retain("Pro", Date.today.to_s)
+=> true
+
+SnapshotManager.should_retain("Ultra", "2000/01/23")
+=> false
+
+SnapshotManager.should_retain("Ultra", Date.today.to_s)
+=> true
+
+SnapshotManager.should_retain("InvalidPlan", Date.today.to_s)
+=> "The plan InvalidPlan is not valid. Valid plans are: [:Pro, :Beginner, :Ultra]"
+
+SnapshotManager.should_retain("Beginner", "invalid date format")
+=> invalid date (Date::Error)
+```

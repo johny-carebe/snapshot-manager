@@ -7,22 +7,22 @@ describe SnapshotManager::Plan::Pro::RetentionValidationService do
   describe '#call' do
     subject { described_class.new(date).call }
 
-    let(:daily_retain_date) { 42 }
+    let(:months_ago) { Date.today.prev_month(monthly_retain_value) }
 
     context 'when retain date is expired' do
-      let(:date) { Date.today.prev_month(12).prev_day(daily_retain_date + 1).to_s }
+      let(:date) { months_ago.prev_day(daily_retain_value + 1).to_s }
 
       it { is_expected.to be_falsey }
     end
 
     context 'when retain date is today' do
-      let(:date) { Date.today.prev_month(12).prev_day(daily_retain_date).to_s }
+      let(:date) { months_ago.prev_day(daily_retain_value).to_s }
 
       it { is_expected.to be_truthy }
     end
 
     context 'when retain date is not expired' do
-      let(:date) { Date.today.prev_month(12).prev_day(daily_retain_date - 1).to_s }
+      let(:date) { months_ago.prev_day(daily_retain_value - 1).to_s }
 
       it { is_expected.to be_truthy }
     end
