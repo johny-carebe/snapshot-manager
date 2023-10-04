@@ -3,6 +3,7 @@
 def daily_retain_value = SnapshotManager::Plan::DAILY_RETAIN_VALUE
 def monthly_retain_value = SnapshotManager::Plan::MONTHLY_RETAIN_VALUE
 def yearly_retain_value = SnapshotManager::Plan::YEARLY_RETAIN_VALUE
+def last_day_of_the_month = SnapshotManager::Plan::LAST_DAY_OF_THE_MONTH
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

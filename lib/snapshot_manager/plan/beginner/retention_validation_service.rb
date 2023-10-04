@@ -14,10 +14,14 @@ module SnapshotManager::Plan::Beginner
     end
 
     private def validate_retention
-      @date >= retain_date
+      validate_beginner_plan
     end
 
-    private def retain_date
+    private def validate_beginner_plan
+      @date >= daily_retain_date
+    end
+
+    private def daily_retain_date
       Date.today.prev_day(SnapshotManager::Plan::DAILY_RETAIN_VALUE)
     end
   end
