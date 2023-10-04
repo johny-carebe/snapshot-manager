@@ -73,6 +73,7 @@ GEM
       yard (~> 0.9, >= 0.9.24)
     thor (1.2.2)
     tilt (2.2.0)
+    timecop (0.9.8)
     unicode-display_width (2.4.2)
     yard (0.9.34)
 
@@ -82,6 +83,7 @@ PLATFORMS
 DEPENDENCIES
   rspec
   solargraph
+  timecop
 
 BUNDLED WITH
    2.4.20

@@ -6,6 +6,8 @@ module SnapshotManager
     MONTHLY_RETAIN_VALUE = 12
     YEARLY_RETAIN_VALUE = 7
 
+    LAST_DAY_OF_THE_MONTH = -1
+
     def self.validate_retention(plan, date)
       Plan.const_get(plan)::RetentionValidationService.new(date).call
     rescue NameError

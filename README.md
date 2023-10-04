@@ -37,28 +37,51 @@ To use the Snapshot Manager Retention Validation, you can call the `SnapshotMana
 
 It will determine whether the snapshot for that date should be retained (returns true) or deleted (returns false) according to the rules of the selected backup plan.
 
-Example Usage:
+Example Usage (let's pretend today is 2023/10/03):
 
 ```ruby
+today = Date.today
+
 SnapshotManager.should_retain("Beginner", "2023/01/23")
 => false
 
-SnapshotManager.should_retain("Beginner", Date.today.to_s)
+SnapshotManager.should_retain("Beginner", "2023/10/03")
 => true
 
-SnapshotManager.should_retain("Pro", "2022/01/23")
+SnapshotManager.should_retain("Pro", "2023/01/23")
 => false
 
-SnapshotManager.should_retain("Pro", Date.today.to_s)
+SnapshotManager.should_retain("Pro", "2023/01/31")
+=> true
+
+SnapshotManager.should_retain("Pro", "2023/10/03")
 => true
 
 SnapshotManager.should_retain("Ultra", "2000/01/23")
 => false
 
-SnapshotManager.should_retain("Ultra", Date.today.to_s)
+SnapshotManager.should_retain("Ultra", "2015/12/31")
+=> false
+
+SnapshotManager.should_retain("Ultra", "2016/12/30")
+=> false
+
+SnapshotManager.should_retain("Ultra", "2016/11/30")
+=> false
+
+SnapshotManager.should_retain("Ultra", "2023/01/23")
+=> false
+
+SnapshotManager.should_retain("Ultra", "2016/12/31")
 => true
 
-SnapshotManager.should_retain("InvalidPlan", Date.today.to_s)
+SnapshotManager.should_retain("Ultra", "2023/01/31")
+=> true
+
+SnapshotManager.should_retain("Ultra", "2023/10/03")
+=> true
+
+SnapshotManager.should_retain("InvalidPlan", "2023/10/03")
 => "The plan InvalidPlan is not valid. Valid plans are: [:Pro, :Beginner, :Ultra]"
 
 SnapshotManager.should_retain("Beginner", "invalid date format")
